@@ -12,5 +12,6 @@ target 'SwiftAll' do
  pod 'SnapKit' 
  pod "Weibo_SDK", :git => "https://github.com/sinaweibosdk/weibo_ios_sdk.git" 
  pod 'MJRefresh'
+ pod 'MBProgressHUD'
  
 end

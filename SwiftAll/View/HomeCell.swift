@@ -260,7 +260,6 @@ class HomeCell: UITableViewCell , WXLabelDelegate {
         self.weiboModel = weiboModel
         self.layoutIfNeeded()
 //        let cellHeight = self.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height + 1
-        
         return self.cellSegmentationView.frame.maxY
     }
     

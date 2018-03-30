@@ -174,10 +174,11 @@ class HomeViewController: BaseViewController ,SinaWeiboRequestDelegate,UITableVi
         
         if self.sinaweibo.isAuthValid() {
             let url = NSString.init(format: "%@%@", BASEURL,HomeTimeLineURL)
+            self.showLoadingWithView(aView: self.view)
             HttpTool.shareIntance.getRequest(urlString: url as String, params: self.paramterDic as! [String : Any], finished: { (response:[String:AnyObject]?, error:NSError?) in
                 self.homeTableView.mj_header.endRefreshing()
                 self.homeTableView.mj_footer.endRefreshing()
-
+                self.hideLoadingWithView(aView: self.view)
                 let dic = response! as NSDictionary
                 let errorStr = dic.object(forKey: "error")
                 if (errorStr != nil){
