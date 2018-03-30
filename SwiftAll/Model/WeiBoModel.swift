@@ -30,12 +30,17 @@ class WeiBoModel: NSObject {
     @objc var comments_count : NSNumber!
     //表态数
     @objc var attitudes_count : NSNumber!
+    //是否点赞
+    @objc var isFavourite : NSNumber!
     
     @objc var user : UserModel!
     //cell高度
     var   cellHeight : CGFloat = 0.0
     
-    
+    override init() {
+        super.init()
+        self.isFavourite = NSNumber.init(value: 0)
+    }
     override func setValue(_ value: Any?, forUndefinedKey key: String) {
       
    

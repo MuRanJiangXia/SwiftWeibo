@@ -35,8 +35,11 @@ class HomeCell: UITableViewCell , WXLabelDelegate {
             self.repostBtn.setTitle(self.weiboModel.reposts_count.stringValue , for: .normal)
             self.commentBtn.setTitle(self.weiboModel.comments_count.stringValue, for: .normal)
             self.attitudeBtn.setTitle(self.weiboModel.attitudes_count.stringValue, for: .normal)
-    
+            self.attitudeBtn.isSelected = self.weiboModel.isFavourite.boolValue
             layoutSubviews()
+            
+            
+
         }
 
     }

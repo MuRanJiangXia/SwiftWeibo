@@ -96,6 +96,7 @@ class HomeViewController: BaseViewController ,SinaWeiboRequestDelegate,UITableVi
         let cell:HomeCell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
         cell.weiboModel = self.cellArr[indexPath.row] as? WeiBoModel
         cell.attitudeBtn.addTarget(self, action: #selector(attitudeAction(btn:)), for: .touchUpInside)
+        cell.attitudeBtn.tag = 2018 + indexPath.row
         return cell
     }
     
@@ -110,8 +111,13 @@ class HomeViewController: BaseViewController ,SinaWeiboRequestDelegate,UITableVi
     
     // MARK: -  点赞方法
     @objc func attitudeAction(btn : UIButton){
-        btn.isSelected = !btn.isSelected
-        if btn.isSelected {
+
+        let row = btn.tag - 2018
+        let model:WeiBoModel = self.cellArr[row] as! WeiBoModel
+        model.isFavourite = NSNumber.init(value: !model.isFavourite.boolValue)
+        btn.isSelected = model.isFavourite.boolValue
+        
+        if  model.isFavourite.boolValue {
             //动画
             let keyAnimation = CAKeyframeAnimation.init()
             keyAnimation.keyPath  = "transform.rotation"
@@ -123,10 +129,11 @@ class HomeViewController: BaseViewController ,SinaWeiboRequestDelegate,UITableVi
             keyAnimation.autoreverses = true
             btn.imageView?.layer.add(keyAnimation, forKey: "attitudemove")
         }
-
         
         
     }
+    
+    
     // MARK: -  上下拉刷新方法
     //下拉刷新
     @objc func headerAction(){
