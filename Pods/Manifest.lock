@@ -1,0 +1,30 @@
+PODS:
+  - Alamofire (4.7.0)
+  - MJRefresh (3.1.15.3)
+  - SnapKit (4.0.0)
+  - Weibo_SDK (3.2.3)
+
+DEPENDENCIES:
+  - Alamofire
+  - MJRefresh
+  - SnapKit
+  - Weibo_SDK (from `https://github.com/sinaweibosdk/weibo_ios_sdk.git`)
+
+EXTERNAL SOURCES:
+  Weibo_SDK:
+    :git: https://github.com/sinaweibosdk/weibo_ios_sdk.git
+
+CHECKOUT OPTIONS:
+  Weibo_SDK:
+    :commit: f5b138320aefe0ed20b76b8510521432f1a6c9ac
+    :git: https://github.com/sinaweibosdk/weibo_ios_sdk.git
+
+SPEC CHECKSUMS:
+  Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
+  MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  Weibo_SDK: 652ca78c2f7147a5de5e75e7cbea89838a81772a
+
+PODFILE CHECKSUM: b75e8c37f1410ecb38de0a9745d8077302ebd0d3
+
+COCOAPODS: 1.4.0
