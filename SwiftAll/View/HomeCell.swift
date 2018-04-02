@@ -36,8 +36,60 @@ class HomeCell: UITableViewCell , WXLabelDelegate {
             self.commentBtn.setTitle(self.weiboModel.comments_count.stringValue, for: .normal)
             self.attitudeBtn.setTitle(self.weiboModel.attitudes_count.stringValue, for: .normal)
             self.attitudeBtn.isSelected = self.weiboModel.isFavourite.boolValue
-            layoutSubviews()
-            
+
+            //根据字符串设置宽度
+            let width =  CYTools.getWidthWithContent(content: self.timeLab.text! as NSString, height: 10, font: 10) + 3
+            self.timeLab.frame = CGRect(x: self.timeLab.frame.minX, y: self.timeLab.frame.minY, width: width, height: self.timeLab.frame.height)
+            //更新约束
+            self.timeLab.snp.updateConstraints { (make) in
+                make.width.equalTo(width)
+            }
+            var showImageView :UIImageView!
+            let showImageWidth  = (kScreenWidth - 20 - 10) / 3
+            let arr:NSArray =    self.imageBgView.subviews as NSArray
+            arr.enumerateObjects { (obj, int, stop) in
+                let  view = obj as! UIView
+                view.removeFromSuperview()
+            }
+          
+            self.weiboModel.pic_urls.enumerateObjects { (obj, int, stop) in
+                let dic = obj as! NSDictionary
+                let line = int / 3
+                let column = int % 3
+                
+                
+                showImageView = UIImageView()
+                self.imageBgView.addSubview(showImageView)
+                let showUrl :URL = URL(string: dic["thumbnail_pic"] as! String)!
+                showImageView.sd_setImage(with:showUrl, placeholderImage: nil, options: .highPriority, completed: nil)
+
+                showImageView.snp.makeConstraints({ (make) in
+                    make.top.equalTo(self.imageBgView).offset((showImageWidth + 5) * CGFloat(line))
+                    make.left.equalTo(self.imageBgView).offset((showImageWidth  + 5) * CGFloat(column))
+                    make.width.equalTo(showImageWidth)
+                    make.height.equalTo(showImageWidth)
+                })
+              
+            }
+         
+            if self.weiboModel.pic_urls.count > 0 {
+                self.imageBgView.snp.updateConstraints { (make) in
+                    if self.weiboModel.pic_urls.count % 3 == 0{
+                        make.height.equalTo((showImageWidth + 5) * CGFloat(self.weiboModel.pic_urls.count / 3 ) )
+                        
+                    }else{
+                        make.height.equalTo((showImageWidth + 5) * CGFloat(self.weiboModel.pic_urls.count / 3 + 1) )
+
+                    }
+                }
+            }else{
+                self.imageBgView.snp.updateConstraints { (make) in
+                    make.height.equalTo(0)
+                }
+                
+            }
+            self.layoutIfNeeded()
+
             
 
         }
@@ -53,6 +105,8 @@ class HomeCell: UITableViewCell , WXLabelDelegate {
     var timeLab: UILabel!
     //手机型号
     var sourceLab: UILabel!
+    //图片背景数组
+    var imageBgView: UIView!
     //转发数
     var repostBtn :UIButton!
     //评论数
@@ -119,6 +173,9 @@ class HomeCell: UITableViewCell , WXLabelDelegate {
         self.contetLab.wxLabelDelegate = self
         self.contentView.addSubview(self.contetLab)
         
+        self.imageBgView = UIView()
+//        self.imageBgView.backgroundColor = UIColor.red
+        self.contentView.addSubview(self.imageBgView)
         
         self.repostBtn = UIButton(type: .custom)
         self.repostBtn.setTitle("转发", for: .normal)
@@ -175,13 +232,10 @@ class HomeCell: UITableViewCell , WXLabelDelegate {
             make.height.equalTo(15)
             
         }
-        //根据字符串设置宽度
-        let width =  CYTools.getWidthWithContent(content: self.timeLab.text! as NSString, height: 10, font: 10)
-        self.timeLab.frame = CGRect(x: self.timeLab.frame.minX, y: self.timeLab.frame.minY, width: width, height: self.timeLab.frame.height)
+
         self.timeLab.snp.makeConstraints { (make) in
             make.left.equalTo(self.userNameLab)
             make.top.equalTo(self.userNameLab.snp.bottom).offset(5)
-            make.width.equalTo(width).priority(.high)
             make.height.equalTo(10)
         }
         self.sourceLab.snp.makeConstraints { (make) in
@@ -195,12 +249,18 @@ class HomeCell: UITableViewCell , WXLabelDelegate {
             make.left.equalTo(self.userImageV)
             make.top.equalTo(self.userImageV.snp.bottom).offset(5)
             make.right.equalTo(self.userNameLab)
-            make.bottom.equalTo(self.lineView.snp.top).offset(-5)
+            make.bottom.equalTo(self.imageBgView.snp.top).offset(-5)
+        }
+        
+        self.imageBgView.snp.makeConstraints { (make) in
+            make.left.equalTo(self.userImageV)
+            make.top.equalTo(self.contetLab.snp.bottom).offset(5)
+            make.width.equalTo(self.contetLab)
         }
         
         self.lineView.snp.makeConstraints { (make) in
             make.left.equalTo(self.userImageV)
-            make.top.equalTo(self.contetLab.snp.bottom).offset(5)
+            make.top.equalTo(self.imageBgView.snp.bottom).offset(5)
             make.right.equalTo(self.contetLab)
             make.height.equalTo(1)
         }

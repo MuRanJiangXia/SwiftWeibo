@@ -46,6 +46,9 @@ class HomeViewController: BaseViewController ,SinaWeiboRequestDelegate,UITableVi
 //                    weiboModel.setValuesForKeys(obj as! [String : Any])
 //                    self.cellArr.add(weiboModel)
 //                }
+//
+//
+//
 //                self.homeTableView.reloadData()
 //            }
         }else{
@@ -109,6 +112,9 @@ class HomeViewController: BaseViewController ,SinaWeiboRequestDelegate,UITableVi
  
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
     // MARK: -  点赞方法
     @objc func attitudeAction(btn : UIButton){
 

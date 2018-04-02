@@ -24,6 +24,8 @@ class WeiBoModel: NSObject {
     @objc var thumbnail_pic : NSString!
     //微博配图ID。多图时返回多图ID，用来拼接图片url。用返回字段thumbnail_pic的地址配上该返回字段的图片ID，即可得到多个图片url。
     @objc var pic_ids : NSString!
+    //图片数组
+    @objc var pic_urls:NSArray!
     //转发数
     @objc var reposts_count : NSNumber!
     //评论数
