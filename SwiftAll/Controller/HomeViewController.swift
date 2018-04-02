@@ -33,24 +33,21 @@ class HomeViewController: BaseViewController ,SinaWeiboRequestDelegate,UITableVi
         self.layoutCell = HomeCell.init(style: UITableViewCellStyle(rawValue: 0)!, reuseIdentifier: "HomeCell")
         
         if self.sinaweibo.isAuthValid() {
-             headerAction()
+//             headerAction()
             //做本地存储用
-//            let json = CYTools.readJson(name: "homeJson")
-//            if json is NSNull  {
-//                headerAction()
-//
-//            }else{
-//                let jsonArr:NSArray = json as! NSArray
-//                jsonArr.enumerateObjects { (obj, int, stop) in
-//                    let weiboModel:WeiBoModel = WeiBoModel()
-//                    weiboModel.setValuesForKeys(obj as! [String : Any])
-//                    self.cellArr.add(weiboModel)
-//                }
-//
-//
-//
-//                self.homeTableView.reloadData()
-//            }
+            let json = CYTools.readJson(name: "homeJson")
+            if json is NSNull  {
+                headerAction()
+
+            }else{
+                let jsonArr:NSArray = json as! NSArray
+                jsonArr.enumerateObjects { (obj, int, stop) in
+                    let weiboModel:WeiBoModel = WeiBoModel()
+                    weiboModel.setValuesForKeys(obj as! [String : Any])
+                    self.cellArr.add(weiboModel)
+                }
+                self.homeTableView.reloadData()
+            }
         }else{
             
             self.sinaweibo.logIn()
